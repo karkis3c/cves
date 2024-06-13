@@ -11,8 +11,6 @@ https://t.co/JPCd6Y4v1g
 
 ## Shodan Querys
 
-```product:"Serv-U ftpd"```
-
 ```product:"Rhinosoft Serv-U httpd"```
 
 ```http.favicon.hash:"812385209,-494622145,-132641984,-2076792107,-1735578509,-938894035,-741511745,-1109617687,963790560,-1882082933"```
