@@ -17,8 +17,5 @@ https://t.co/JPCd6Y4v1g
 
 ```title:"Serv-U"```
 
-## The following versions of Serv-U are affected, running on either Windows or Linux
-
-- Serv-U FTP Server 15.4
-- Serv-U Gateway 15.4
-- Serv-U MFT Server 15.4
+## Affected Products
+SolarWinds Serv-U 15.4.2 HF 1 and previous versions
