@@ -1,4 +1,4 @@
-id: serv-u
+id: serv-u-version
 
 info:
   name: Extract Serv-U Version
@@ -28,5 +28,3 @@ requests:
         part: header
         regex:
           - "Server:.*?Serv-U\\/([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)"
-        group: 1
-        name: version
