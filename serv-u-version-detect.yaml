@@ -1,0 +1,32 @@
+id: serv-u
+
+info:
+  name: Extract Serv-U Version
+  author: kaks3c
+  severity: info
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "Serv-U/"
+        part: header
+        condition: or
+
+      - type: regex
+        regex:
+          - "Server:.*?Serv-U\\/([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)"
+        part: header
+
+    extractors:
+      - type: regex
+        part: header
+        regex:
+          - "Server:.*?Serv-U\\/([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)"
+        group: 1
+        name: version
