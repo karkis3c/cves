@@ -1,0 +1,63 @@
+id: reflected-value-via-query
+
+info:
+  name: Check reflected-values in response body.
+  author: kaks3c
+  severity: low
+  description: |
+    This template tests for reflected values in query parameters by sending different encoded payloads and matching the responses.
+  tags: xss,low
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+    headers:
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0
+
+    payloads:
+      payload:
+        - bugcrowdresecher111
+        - '%62%75%67%63%72%6F%77%64%72%65%73%65%63%68%65%72%32%32%32'
+        - YnVnY3Jvd2RyZXNlY2hlcjMzMw==
+        - '&#98;&#117;&#103;&#99;&#114;&#111;&#119;&#100;&#114;&#101;&#115;&#101;&#99;&#104;&#101;&#114;&#52;&#52;'
+
+    attack: batteringram
+
+    fuzzing:
+      - part: query
+        fuzz:
+          - "{{payload}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - bugcrowdresecher111
+        part: body
+        name: plaintext
+
+      - type: word
+        words:
+          - bugcrowdresecher222
+        part: body
+        name: urlencode
+
+      - type: word
+        words:
+          - bugcrowdresecher333
+        part: body
+        name: base64
+
+      - type: word
+        words:
+          - bugcrowdresecher444
+        part: body
+        name: htmlencode
+
+      - type: word
+        words:
+          - "Content-type: application/json"
+        part: header
+        negative: true
+
+    stop-at-first-match: true
