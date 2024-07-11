@@ -6,7 +6,7 @@ info:
   severity: low
   description: |
     This template tests for reflected values in query parameters by sending different encoded payloads and matching the responses.
-  tags: xss,low
+  tags: xss,low,fuzz
 
 http:
   - method: GET
@@ -29,36 +29,46 @@ http:
         fuzz:
           - "{{payload}}"
 
-    matchers-condition: or
+    matchers-condition: and
     matchers:
       - type: word
         words:
           - bugcrowdresecher111
-        part: body
-        name: plaintext
-
-      - type: word
-        words:
           - bugcrowdresecher222
-        part: body
-        name: urlencode
-
-      - type: word
-        words:
           - bugcrowdresecher333
-        part: body
-        name: base64
-
-      - type: word
-        words:
           - bugcrowdresecher444
         part: body
-        name: htmlencode
+        condition: or
 
       - type: word
         words:
           - "Content-type: application/json"
         part: header
         negative: true
+
+    extractors:
+      - type: regex
+        part: body
+        name: plaintext
+        regex:
+          - "bugcrowdresecher111" #1payload-works
+
+      - type: regex
+        part: body
+        name: urlencode
+        regex:
+          - "bugcrowdresecher222" #2payload-works
+
+      - type: regex
+        part: body
+        name: base64encode
+        regex:
+          - "bugcrowdresecher333" #3payload-worked
+
+      - type: regex
+        part: body
+        name: htmlencode
+        regex:
+          - "bugcrowdresecher444" #4payload-worked
 
     stop-at-first-match: true
