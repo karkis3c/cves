@@ -1,0 +1,69 @@
+id: reflected-value-via-path
+
+info:
+  name: Check reflected-values in response body.
+  author: kaks3c
+  severity: low
+  description: |
+    This template tests for reflected values in path parameters by sending different encoded payloads and matching the responses.
+  tags: xss,low
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}/{{payload}}"
+    headers:
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0
+
+    payloads:
+      payload:
+        - bugcrowdresecher111
+        - '%62%75%67%63%72%6F%77%64%72%65%73%65%63%68%65%72%32%32%32'
+        - YnVnY3Jvd2RyZXNlY2hlcjMzMw==
+        - '&#98;&#117;&#103;&#99;&#114;&#111;&#119;&#100;&#114;&#101;&#115;&#101;&#99;&#104;&#101;&#114;&#52;&#52;'
+
+    attack: batteringram
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - bugcrowdresecher111
+          - bugcrowdresecher222
+          - bugcrowdresecher333
+          - bugcrowdresecher444
+        part: body
+        condition: or
+
+      - type: word
+        words:
+          - "Content-type: application/json"
+        part: header
+        negative: true
+
+    extractors:
+      - type: regex
+        part: body
+        name: plaintext
+        regex:
+          - "bugcrowdresecher111"
+
+      - type: regex
+        part: body
+        name: urlencode
+        regex:
+          - "bugcrowdresecher222"
+
+      - type: regex
+        part: body
+        name: base64encode
+        regex:
+          - "bugcrowdresecher333"
+
+      - type: regex
+        part: body
+        name: htmlencode
+        regex:
+          - "bugcrowdresecher444"
+
+    stop-at-first-match: true
