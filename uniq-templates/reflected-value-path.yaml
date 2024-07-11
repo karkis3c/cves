@@ -46,24 +46,24 @@ http:
         part: body
         name: plaintext
         regex:
-          - "bugcrowdresecher111"
+          - "bugcrowdresecher111" #1payload-works
 
       - type: regex
         part: body
         name: urlencode
         regex:
-          - "bugcrowdresecher222"
+          - "bugcrowdresecher222" #2payload-works
 
       - type: regex
         part: body
         name: base64encode
         regex:
-          - "bugcrowdresecher333"
+          - "bugcrowdresecher333" #3payload-worked
 
       - type: regex
         part: body
         name: htmlencode
         regex:
-          - "bugcrowdresecher444"
+          - "bugcrowdresecher444" #4payload-worked
 
     stop-at-first-match: true
