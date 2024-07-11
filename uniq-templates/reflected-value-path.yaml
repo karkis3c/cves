@@ -46,13 +46,13 @@ http:
         part: body
         name: plaintext
         regex:
-          - "bugcrowdresecher111" #1payload-works
+          - "bugcrowdresecher111" #1payload-worked
 
       - type: regex
         part: body
         name: urlencode
         regex:
-          - "bugcrowdresecher222" #2payload-works
+          - "bugcrowdresecher222" #2payload-worked
 
       - type: regex
         part: body
