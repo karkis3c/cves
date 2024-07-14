@@ -6,7 +6,7 @@ info:
   severity: medium
   description: |
     Checks for exposed Git repositories by making requests to potential Git repository paths.
-  tags: p3,exposed,logs,git
+  tags: p3,logs,git
 
 http:
   - raw:
@@ -31,6 +31,7 @@ http:
         - /.git/refs/remotes/
         - /.git/objects/
 
+    matchers-condition: or
     matchers:
       - type: word
         words:
@@ -41,7 +42,6 @@ http:
           - "Index of /" #/.git/
           - "You do not have permission to access /.git/" #403_/.git
           - "Unnamed repository; edit this file 'description' to name the repository" #/.git/description
-        condition: or
 
       - type: regex
         regex:
